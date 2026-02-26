@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolLeader WebApp - 分野マスタ管理</title>
+    <!-- Tailwind CSS & DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;800&display=swap');
+        body { font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; }
+        .brand-logo { font-family: 'M PLUS Rounded 1c', sans-serif; }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        .menu ul ul ul { margin-left: 1.5rem; border-left: 1px dashed rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800">
+
+<div class="flex flex-col h-screen overflow-hidden">
+    <!-- Top Navbar (Shared from Dashboard) -->
+    <header class="navbar bg-white border-b border-slate-200 px-4 shrink-0 z-20 shadow-sm">
+        <div class="flex-1">
+            <div class="flex items-center gap-2 group cursor-pointer" onclick="location.href='#'">
+                <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-2 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-graduation-cap fa-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="brand-logo text-2xl font-black tracking-tight leading-none bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-500">
+                        SchoolLeader
+                    </span>
+                    <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Academic Management Platform</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex-none gap-4">
+            <div class="flex flex-col items-end mr-2">
+                <span class="text-xs font-bold text-slate-900">管理者 太郎 殿</span>
+                <span class="badge badge-primary badge-xs font-bold px-2 py-1.5">システム管理者</span>
+            </div>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar border-2 border-indigo-100">
+                    <div class="w-10 rounded-full bg-indigo-50 flex items-center justify-center">
+                        <i class="fa-solid fa-user-gear text-indigo-400"></i>
+                    </div>
+                </div>
+                <ul tabindex="0" class="mt-3 z-[1] p-2 shadow-2xl menu menu-sm dropdown-content bg-base-100 rounded-2xl w-52 border border-slate-100">
+                    <li><a><i class="fa-solid fa-circle-user"></i>プロフィール</a></li>
+                    <li><a><i class="fa-solid fa-sliders"></i>個人設定</a></li>
+                    <div class="divider my-1"></div>
+                    <li class="text-error font-bold"><a><i class="fa-solid fa-power-off"></i>ログアウト</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar Navigation (Same as Dashboard) -->
+        <aside class="w-72 bg-slate-900 text-slate-300 hidden lg:flex flex-col shrink-0 border-r border-slate-800">
+            <nav class="flex-1 overflow-y-auto p-3 sidebar-scroll">
+                <ul class="menu p-0 w-full gap-0.5">
+                    <li class="menu-title text-indigo-400 text-[10px] uppercase tracking-[0.2em] font-black mt-2 mb-2">Main Menu</li>
+                    <li><a><i class="fa-solid fa-house-chimney w-5"></i>ダッシュボード</a></li>
+                    <li>
+                        <details>
+                            <summary><i class="fa-solid fa-user-graduate w-5"></i>教務管理</summary>
+                            <ul>
+                                <li><a>学籍管理</a></li>
+                                <li><a>履修登録</a></li>
+                                <li><a>出欠入力</a></li>
+                                <li><a>成績入力</a></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li>
+                        <details open>
+                            <summary class="hover:bg-slate-800 rounded-lg"><i class="fa-solid fa-database w-5 text-blue-400"></i>マスタ管理</summary>
+                            <ul>
+                                <li>
+                                    <details>
+                                        <summary>教務管理マスタ</summary>
+                                        <ul>
+                                            <li><a>課程マスタ</a></li>
+                                            <li><a>学科マスタ</a></li>
+                                            <li><a>専攻マスタ</a></li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details open>
+                                        <summary class="text-indigo-300 font-bold">履修管理マスタ</summary>
+                                        <ul>
+                                            <li><a class="active bg-indigo-600 text-white font-bold">分野マスタ</a></li>
+                                            <li><a>科目マスタ</a></li>
+                                            <li><a>講座マスタ</a></li>
+                                            <li><a>カレンダーマスタ</a></li>
+                                            <li><a>出欠種別マスタ</a></li>
+                                            <li><a>成績評価マスタ</a></li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <!-- 他は省略 -->
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50/50">
+            
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <div class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-1">Master Management / Curriculum</div>
+                    <h1 class="text-2xl font-black text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-tags text-indigo-600"></i> 分野マスタ管理
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Action Area: 検索 or 入力フォーム (HTMX hx-target対象領域) -->
+            <div id="action-area" class="mb-6 transition-all">
+                
+                <!-- 検索エリア (Default) -->
+                <div id="search-section" class="card bg-white shadow-sm border border-slate-200">
+                    <div class="card-body p-4 md:p-6">
+                        <div class="flex flex-wrap items-end gap-4">
+                            <div class="form-control w-full max-w-[150px]">
+                                <label class="label py-1"><span class="label-text font-bold text-xs">成績年度</span></label>
+                                <select class="select select-bordered select-sm">
+                                    <option value="">全件表示</option>
+                                    <option value="2025" selected>2025年度</option>
+                                    <option value="2024">2024年度</option>
+                                    <option value="2023">2023年度</option>
+                                </select>
+                            </div>
+                            <div class="form-control flex-1 min-w-[200px]">
+                                <label class="label py-1"><span class="label-text font-bold text-xs">キーワード検索 (名称)</span></label>
+                                <div class="join w-full">
+                                    <input type="text" placeholder="分野名を入力..." class="input input-bordered input-sm join-item w-full" />
+                                    <button class="btn btn-sm btn-neutral join-item px-4">
+                                        <i class="fa-solid fa-magnifying-glass"></i> 検索
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex-none ml-auto">
+                                <button onclick="showForm('add')" class="btn btn-sm btn-primary px-6 shadow-md shadow-indigo-200">
+                                    <i class="fa-solid fa-plus"></i> 新規追加
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 入力フォームエリア (初期非表示) -->
+                <div id="form-section" class="card bg-white shadow-md border-2 border-indigo-100 hidden">
+                    <div class="card-body p-4 md:p-6">
+                        <div class="flex items-center gap-3 mb-4 border-b pb-2">
+                            <div id="form-icon" class="p-2 bg-indigo-100 text-indigo-600 rounded-lg"><i class="fa-solid fa-plus"></i></div>
+                            <h2 id="form-title" class="text-lg font-black text-slate-800">新規追加</h2>
+                        </div>
+                        
+                        <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div class="form-control">
+                                <label class="label py-1"><span class="label-text font-bold text-xs">成績年度 <span class="text-error">*</span></span></label>
+                                <select id="input-year" class="select select-bordered select-sm font-bold text-indigo-600">
+                                    <option value="2025">2025年度</option>
+                                    <option value="2024">2024年度</option>
+                                </select>
+                            </div>
+                            <div class="form-control">
+                                <label class="label py-1"><span class="label-text font-bold text-xs">分野CD <span class="text-error">*</span></span></label>
+                                <input id="input-cd" type="text" class="input input-bordered input-sm" placeholder="例: A01" />
+                            </div>
+                            <div class="form-control md:col-span-1">
+                                <label class="label py-1"><span class="label-text font-bold text-xs">学園CD <span class="text-error">*</span></span></label>
+                                <select class="select select-bordered select-sm">
+                                    <option value="01">01 (本校)</option>
+                                </select>
+                            </div>
+                            <div class="form-control md:col-span-2">
+                                <label class="label py-1"><span class="label-text font-bold text-xs">名前 <span class="text-error">*</span></span></label>
+                                <input id="input-name" type="text" class="input input-bordered input-sm w-full" placeholder="分野名称を入力" />
+                            </div>
+                            <div class="form-control md:col-span-2">
+                                <label class="label py-1"><span class="label-text font-bold text-xs">略称</span></label>
+                                <input id="input-short" type="text" class="input input-bordered input-sm w-full" placeholder="画面表示用の短い名称" />
+                            </div>
+
+                            <div class="md:col-span-4 flex justify-end gap-2 mt-4 pt-4 border-t border-slate-100">
+                                <button type="button" onclick="hideForm()" class="btn btn-sm btn-ghost px-6">キャンセル</button>
+                                <button type="button" class="btn btn-sm btn-primary px-8 shadow-lg shadow-indigo-100">
+                                    <i class="fa-solid fa-save"></i> <span id="btn-save-text">登録する</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Data Table: 帳票形式一覧 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-5 py-3 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-black text-slate-700">分野一覧</span>
+                        <div class="badge badge-sm badge-ghost opacity-50 font-bold">2025年度</div>
+                    </div>
+                    <div class="text-[10px] text-slate-400 font-bold uppercase">Total: 4 Records</div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="table table-zebra table-sm w-full">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-[11px] uppercase tracking-wider border-b border-slate-100">
+                                <th class="py-4 pl-6 w-24">年度</th>
+                                <th class="w-32">分野CD</th>
+                                <th>名称</th>
+                                <th>略称</th>
+                                <th class="w-20 text-center">学園</th>
+                                <th class="w-40 text-right pr-6">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-600 font-medium">
+                            <tr class="hover:bg-indigo-50/30 transition-colors">
+                                <td class="pl-6 font-mono text-xs">2025</td>
+                                <td class="font-bold text-indigo-600">GS01</td>
+                                <td class="text-slate-800">基礎教養分野</td>
+                                <td>基礎教養</td>
+                                <td class="text-center">01</td>
+                                <td class="text-right pr-6 space-x-1">
+                                    <button onclick="showForm('edit', 'GS01', '基礎教養分野')" class="btn btn-xs btn-outline btn-primary font-bold"><i class="fa-solid fa-pen-to-square mr-1"></i> 編集</button>
+                                    <button class="btn btn-xs btn-ghost text-error px-1"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-indigo-50/30 transition-colors">
+                                <td class="pl-6 font-mono text-xs">2025</td>
+                                <td class="font-bold text-indigo-600">GS02</td>
+                                <td class="text-slate-800">専門演習分野</td>
+                                <td>専門演習</td>
+                                <td class="text-center">01</td>
+                                <td class="text-right pr-6 space-x-1">
+                                    <button onclick="showForm('edit', 'GS02', '専門演習分野')" class="btn btn-xs btn-outline btn-primary font-bold"><i class="fa-solid fa-pen-to-square mr-1"></i> 編集</button>
+                                    <button class="btn btn-xs btn-ghost text-error px-1"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-indigo-50/30 transition-colors">
+                                <td class="pl-6 font-mono text-xs">2025</td>
+                                <td class="font-bold text-indigo-600">GS03</td>
+                                <td class="text-slate-800">キャリア形成分野</td>
+                                <td>キャリア</td>
+                                <td class="text-center">01</td>
+                                <td class="text-right pr-6 space-x-1">
+                                    <button onclick="showForm('edit', 'GS03', 'キャリア形成分野')" class="btn btn-xs btn-outline btn-primary font-bold"><i class="fa-solid fa-pen-to-square mr-1"></i> 編集</button>
+                                    <button class="btn btn-xs btn-ghost text-error px-1"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Footer info -->
+            <div class="mt-6 flex justify-between items-center text-[10px] text-slate-400 font-bold px-2">
+                <div>Table: [dbo].[CD分野]</div>
+                <div>Update: 2024-05-23 15:40</div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- モック用簡易スクリプト (実際はHTMXのPartialViewで切り替える箇所) -->
+<script>
+    function showForm(mode, cd = '', name = '') {
+        document.getElementById('search-section').classList.add('hidden');
+        document.getElementById('form-section').classList.remove('hidden');
+        
+        const title = document.getElementById('form-title');
+        const icon = document.getElementById('form-icon');
+        const btnText = document.getElementById('btn-save-text');
+        
+        if (mode === 'edit') {
+            title.innerText = '分野情報の編集';
+            icon.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+            icon.className = 'p-2 bg-amber-100 text-amber-600 rounded-lg';
+            btnText.innerText = '更新する';
+            
+            // 値のセット (Mock)
+            document.getElementById('input-cd').value = cd;
+            document.getElementById('input-name').value = name;
+            document.getElementById('input-cd').disabled = true; // CDは主キー想定
+        } else {
+            title.innerText = '新規追加';
+            icon.innerHTML = '<i class="fa-solid fa-plus"></i>';
+            icon.className = 'p-2 bg-indigo-100 text-indigo-600 rounded-lg';
+            btnText.innerText = '登録する';
+            
+            // フォームクリア
+            document.getElementById('input-cd').value = '';
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-cd').disabled = false;
+        }
+    }
+
+    function hideForm() {
+        document.getElementById('search-section').classList.remove('hidden');
+        document.getElementById('form-section').classList.add('hidden');
+    }
+</script>
+
+</body>
+</html>
